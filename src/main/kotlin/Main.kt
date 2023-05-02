@@ -1,9 +1,19 @@
+import controllers.CollectionAPI
+import models.Collection
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
+import utils.ScannerInput.readNextLine
+import java.time.LocalDate.now
+import java.util.Date
+
+private val collectionAPI = CollectionAPI()
 
 fun main() = runMenu()
 
+fun test() = print(now())
+
 fun runMenu() {
+    test()
     do {
         when (val option = mainMenu()) {
             1 -> addCollection()
@@ -29,7 +39,13 @@ fun mainMenu() = readNextInt(
          > ==>> """.trimMargin(">")
 )
 
-fun addCollection() = println("Adds a Collection")
+fun addCollection(){
+    val collectionName = readNextLine("Enter a name for the collection: ")
+    val createdBy = readNextLine("Enter the creator of the collection: ")
+    val isAdded = collectionAPI.add(Collection(cname = collectionName, createdBy = createdBy, rank = 1))
+    if (isAdded) println("Added Successfully\n")
+    else println("Add Failed\n")
+}
 
 fun listCollections() = println("List of Collections")
 
