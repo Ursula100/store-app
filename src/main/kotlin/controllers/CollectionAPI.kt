@@ -12,4 +12,20 @@ class CollectionAPI {
         return collections.add(collection)
     }
 
+    fun numberOfCollections(): Int {
+        return collections.size
+    }
+
+    fun findCollection(index: Int): Collection? {
+        return if (isValidListIndex(index, collections))
+            collections[index]
+        else null
+    }
+
+
+    //utility method to determine if an index is valid in list.
+    fun isValidListIndex (index: Int, list: List<Any>): Boolean{
+        return (index >= 0 && index < list.size)
+    }
+
 }
