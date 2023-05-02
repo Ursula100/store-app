@@ -47,7 +47,11 @@ fun addCollection(){
     else println("Add Failed\n")
 }
 
-fun listCollections() = println("List of Collections")
+fun listCollections() {
+    if(collectionAPI.numberOfCollections()>0)
+        print("There are : ${collectionAPI.numberOfCollections()} collections in store \n")
+    println(collectionAPI.listAllCollections())
+}
 
 fun updateCollection() = println("Updates a Collection")
 
