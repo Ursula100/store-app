@@ -6,11 +6,16 @@ class CollectionAPI {
     private var collections = ArrayList<Collection>()
 
     private var lastId = 2000
-    private fun getId() = lastId++
+    private fun nextId() = lastId++
 
     fun add(collection: Collection): Boolean {
+        collection.collectionId = nextId()
         return collections.add(collection)
     }
+
+    fun listAllCollections(): String =
+        if  (collections.isEmpty()) "No collections in store"
+        else collections.joinToString (separator = "\n") { collection -> collection.toString() }
 
     fun numberOfCollections(): Int {
         return collections.size
