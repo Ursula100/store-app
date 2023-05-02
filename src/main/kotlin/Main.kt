@@ -57,5 +57,5 @@ fun updateCollection() = println("Updates a Collection")
 
 fun deleteCollection() = println("Deletes a Collection")
 
-fun exitApp() = println("Exiting...")
+fun exitApp() = println("Exiting!!!")
 
