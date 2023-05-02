@@ -17,13 +17,16 @@ class CollectionAPI {
         if  (collections.isEmpty()) "No collections in store"
         else collections.joinToString (separator = "\n") { collection -> collection.toString() }
 
-    fun listByCreatedBy(designer : String): String =
+    fun listCollectionsCreatedBy(designer : String): String =
         if  (collections.isEmpty()) "No collections in store"
         else collections.filter{collection: Collection -> collection.createdBy == designer}
                         .joinToString(separator = "\n"){collection -> collection.toString()}
                         .ifBlank {"Currently no collection from $designer"}
 
     fun numberOfCollections(): Int = collections.size
+
+    fun numberOfCollectionsBy(designer: String): Int =
+        collections.count { collection: Collection -> collection.createdBy == designer }
 
     fun findCollection(index: Int): Collection? {
         return if (isValidListIndex(index, collections))
