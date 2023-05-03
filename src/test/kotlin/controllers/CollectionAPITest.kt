@@ -11,6 +11,7 @@ class CollectionAPITest {
     private var summer: Collection? = null
     private var daizy: Collection? = null
     private var justMe: Collection? = null
+    private var autumn: Collection? = null
     private var feezyRitz: Collection? = null
     private var populatedCollection: CollectionAPI? = CollectionAPI()
     private var emptyCollection: CollectionAPI? = CollectionAPI()
@@ -18,6 +19,7 @@ class CollectionAPITest {
     @BeforeEach
     fun setup() {
         summer = Collection(cname = "Summer", createdBy = "Me", rank = 1)
+        autumn = Collection(cname = "Autumn", createdBy = "Me", rank = 1)
         daizy = Collection(cname = "Daizy", createdBy = "Charles Dave", rank = 1)
         justMe = Collection(cname = "JustMe", createdBy = "Penelope Wen", rank = 1)
         feezyRitz = Collection(cname = "FeezyRitz", createdBy = "Ritz Dumblemort", rank = 1)
@@ -27,6 +29,7 @@ class CollectionAPITest {
         populatedCollection!!.add(daizy!!)
         populatedCollection!!.add(justMe!!)
         populatedCollection!!.add(feezyRitz!!)
+        populatedCollection!!.add(autumn!!)
     }
 
     @AfterEach
@@ -37,6 +40,7 @@ class CollectionAPITest {
         feezyRitz = null
         populatedCollection = null
         emptyCollection = null
+        autumn = null
     }
 
     @Nested
@@ -44,9 +48,9 @@ class CollectionAPITest {
         @Test
         fun `adding a Collection to a populated list adds to the ArrayList`() {
             val newCollection = Collection(cname = "WinterTrend", createdBy = "Me", rank = 1)
-            assertEquals(4, populatedCollection!!.numberOfCollections())
-            assertTrue(populatedCollection!!.add(newCollection))
             assertEquals(5, populatedCollection!!.numberOfCollections())
+            assertTrue(populatedCollection!!.add(newCollection))
+            assertEquals(6, populatedCollection!!.numberOfCollections())
             assertEquals(newCollection, populatedCollection!!.findCollection(populatedCollection!!.numberOfCollections() - 1))
         }
 
@@ -70,12 +74,34 @@ class CollectionAPITest {
 
         @Test
         fun `listAllCollections returns Collections when ArrayList is not empty`() {
-            assertEquals(4, populatedCollection!!.numberOfCollections())
+            assertEquals(5, populatedCollection!!.numberOfCollections())
             val notesString = populatedCollection!!.listAllCollections().lowercase()
             assertTrue(notesString.contains("justme"))
             assertTrue(notesString.contains("summer"))
             assertTrue(notesString.contains("daizy"))
             assertTrue(notesString.contains("feezyritz"))
+            assertTrue(notesString.contains("autumn"))
+        }
+    }
+    @Nested
+    inner class ListCollectionsByCreatedBy {
+        @Test
+        fun `listCollectionsByCreatedBy returns No Collections in Store when ArrayList has no collections stored` (){
+            assertEquals(0, emptyCollection!!.numberOfCollectionsBy("Nike"))
+            assertTrue(emptyCollection!!.listCollectionsCreatedBy("Nike").lowercase() == "no collections in store")
+        }
+
+        @Test
+        fun `listCollectionsByCreatedBy returns Currently No Collections from $designer when populated ArrayList has no collections by the specified designer stored`(){
+            assertEquals(0, populatedCollection!!.numberOfCollectionsBy("Nike"))
+            assertTrue(populatedCollection!!.listCollectionsCreatedBy("Nike").lowercase() == "currently no collection from nike")
+        }
+
+        @Test
+        fun `listCollectionsByCreatedBy returns collections from specified designer when populated ArrayList contains collections of the specified designer ignoringCase`(){
+            assertEquals(2, populatedCollection!!.numberOfCollectionsBy("me"))
+            assertTrue(populatedCollection!!.listCollectionsCreatedBy("Me").lowercase().contains("autumn"))
+            assertTrue(populatedCollection!!.listCollectionsCreatedBy("Me").lowercase().contains("summer"))
         }
     }
 }
