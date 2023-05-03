@@ -64,7 +64,14 @@ fun listCollectionsByBrand(){
 
 fun updateCollection() = println("Updates a Collection")
 
-fun deleteCollection() = println("Deletes a Collection")
+fun deleteCollection() {
+    listCollections()
+    if (collectionAPI.numberOfCollections() > 0) {
+        val id = readNextInt("Enter the ID of the collection to delete: ")
+        val collectionToDelete = collectionAPI.deleteCollection(id)
+        if (collectionToDelete) println("Delete Successful! Deleted collection $id \n")
+    }
+}
 
 fun exitApp() = println("Exiting!!!")
 
