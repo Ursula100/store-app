@@ -51,14 +51,14 @@ fun addCollection(){
 
 fun listCollections() {
     if(collectionAPI.numberOfCollections()>0)
-        print("There are : ${collectionAPI.numberOfCollections()} collections in store \n")
+        print("There are/is : ${collectionAPI.numberOfCollections()} collection(s) in store \n")
     println(collectionAPI.listAllCollections())
 }
 
 fun listCollectionsByBrand(){
     val brand = readNextLine("Enter category: ")
     if(collectionAPI.numberOfCollectionsBy(brand)>0)
-        print("There are ${collectionAPI.numberOfCollectionsBy(brand)} collections from $brand \n")
+        print("There are/is ${collectionAPI.numberOfCollectionsBy(brand)} collection(s) from $brand \n")
     println(collectionAPI.listCollectionsCreatedBy(brand))
 }
 
