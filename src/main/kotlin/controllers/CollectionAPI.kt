@@ -8,6 +8,7 @@ class CollectionAPI {
     private var lastId = 2000
     private fun nextId() = lastId++
 
+
     fun add(collection: Collection): Boolean {
         collection.collectionId = nextId()
         return collections.add(collection)
@@ -23,6 +24,8 @@ class CollectionAPI {
                         .joinToString(separator = "\n"){collection -> collection.toString()}
                         .ifBlank {"Currently no collection from $designer"}
 
+    fun deleteCollection(id: Int) = collections.removeIf { collection -> collection.collectionId == id }
+
     fun numberOfCollections(): Int = collections.size
 
     fun numberOfCollectionsBy(designer: String): Int =
@@ -33,7 +36,6 @@ class CollectionAPI {
             collections[index]
         else null
     }
-
 
     //utility method to determine if an index is valid in list.
     fun isValidListIndex (index: Int, list: List<Any>): Boolean{
