@@ -26,12 +26,12 @@ class CollectionAPI {
 
     fun deleteCollection(id: Int): Boolean = collections.removeIf { collection -> collection.collectionId == id }
 
-    fun updateCollection(id: Int, collection: Collection): Boolean {
+    fun updateCollection(id: Int, name: String, by: String, rank: Int): Boolean {
         val toUpdate: Collection? = searchById(id)
         if (toUpdate != null) {
-            toUpdate.cname = collection.cname
-            toUpdate.createdBy = collection.createdBy
-            toUpdate.rank = collection.rank
+            toUpdate.cname = name
+            toUpdate.createdBy = by
+            toUpdate.rank = rank
             return true
         }
         return false

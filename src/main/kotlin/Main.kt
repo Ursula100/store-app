@@ -62,7 +62,21 @@ fun listCollectionsByBrand(){
     println(collectionAPI.listCollectionsCreatedBy(brand))
 }
 
-fun updateCollection() = println("Updates a Collection")
+fun updateCollection(){
+    listCollections()
+    if (collectionAPI.numberOfCollections() > 0) {
+        val collectionId = readNextInt("Enter the ID of the collection to update: ")
+        if (collectionAPI.searchById(collectionId)!=null) {
+            val name = readNextLine("Enter name of the collection: ")
+            val from = readNextLine("Enter collection brand/designer: ")
+            val rank  = readNextInt("Enter the rank of the collection: ")
+            if (collectionAPI.updateCollection(collectionId, name, from, rank))
+                println("Update Successful")
+            else println("Update Failed")
+        }
+        else println("There is no Collection with id: $collectionId \n")
+    }
+}
 
 fun deleteCollection() {
     listCollections()
