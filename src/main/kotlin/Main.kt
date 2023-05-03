@@ -10,10 +10,10 @@ private val collectionAPI = CollectionAPI()
 
 fun main() = runMenu()
 
-fun test() = print(now())
+//fun test() = print(now())
 
 fun runMenu() {
-    test()
+    //test()
     do {
         when (val option = mainMenu()) {
             1 -> addCollection()
@@ -29,16 +29,16 @@ fun runMenu() {
 fun mainMenu() = readNextInt(
     """ 
          > -----------------------------------------------------  
-         > |                  NOTE KEEPER APP                  |
+         > |                  STORE APP                        |
          > -----------------------------------------------------  
-         > | NOTE MENU                                         |
+         > | STORE APP MENU                                    |
          > |   1) Add a Collection                             |
          > |   2) List All Collections                         |
          >     3) List Collection by designer/brand                                               |
          > |   4) Update a Collection                          |
          > |   5) Delete a Collection                          |
          > -----------------------------------------------------   
-         > ==>> """.trimMargin(">")
+         > ==>> Choose an option:  """.trimMargin(">")
 )
 
 fun addCollection(){
