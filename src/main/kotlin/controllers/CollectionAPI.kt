@@ -24,7 +24,7 @@ class CollectionAPI {
                         .joinToString(separator = "\n"){collection -> collection.toString()}
                         .ifBlank {"Currently no collection from $designer"}
 
-    fun deleteCollection(id: Int) = collections.removeIf { collection -> collection.collectionId == id }
+    fun deleteCollection(id: Int): Boolean = collections.removeIf { collection -> collection.collectionId == id }
 
     fun numberOfCollections(): Int = collections.size
 
