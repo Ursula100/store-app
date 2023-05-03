@@ -1,6 +1,8 @@
 import controllers.CollectionAPI
 import models.Collection
+import models.Item
 import utils.ScannerInput
+import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.time.LocalDate.now
@@ -85,6 +87,21 @@ fun deleteCollection() {
         val collectionToDelete = collectionAPI.deleteCollection(id)
         if (collectionToDelete) println("Delete Successful! Deleted collection $id \n")
         else println("Delete Unsuccessful! No collection with ID: $id \n")
+    }
+}
+
+private fun addItemToCollection() {
+    val collection: Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection the item is to be added: "))
+    if (collection != null) {
+        val name = readNextLine("Enter the name of the item: ")
+        val desc = readNextLine("Enter a description for the item: ")
+        val mat = readNextLine("Enter the material of the item: ")
+        val cat = readNextLine("Enter the name of the item: ")
+        val price = readNextDouble("Enter the price of the item (for example 15.00): ")
+        val newItem: Item = Item(iName = name, iDesc = desc, material = mat, category = cat, price = price )
+        if (collection.addItem(newItem))
+            println("Successfully added item with ID ${newItem.itemId}!")
+        else println("Add UnSuccessful")
     }
 }
 
