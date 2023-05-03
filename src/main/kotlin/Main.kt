@@ -84,6 +84,7 @@ fun deleteCollection() {
         val id = readNextInt("Enter the ID of the collection to delete: ")
         val collectionToDelete = collectionAPI.deleteCollection(id)
         if (collectionToDelete) println("Delete Successful! Deleted collection $id \n")
+        else println("Delete Unsuccessful! No collection with ID: $id \n")
     }
 }
 
