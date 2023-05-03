@@ -123,4 +123,29 @@ class CollectionAPITest {
             assertEquals(3, populatedCollection!!.numberOfCollections())
         }
     }
+
+    @Nested
+    inner class UpdateCollection {
+        @Test
+        fun `updating a collection that does not exist returns false`(){
+            assertFalse(populatedCollection!!.updateCollection(1999,"Yummy", "Me", 2 ))
+            assertFalse(emptyCollection!!.updateCollection(2000,"Yess", "Tony Montana", 1))
+            assertFalse(emptyCollection!!.updateCollection(1999,"Yess", "Tony Montana", 1))
+        }
+
+        @Test
+        fun `updating a collection that exists returns true and updates`() {
+            //check collection with id 2002 exists and check the contents
+            assertEquals(justMe, populatedCollection!!.searchById(2002))
+            assertEquals("JustMe", populatedCollection!!.searchById(2002)!!.cname)
+            assertEquals("Penelope Wen", populatedCollection!!.searchById(2002)!!.createdBy)
+            assertEquals(1, populatedCollection!!.searchById(2002)!!.rank)
+
+            //update collection having id 2002 with new information and ensure contents updated successfully
+            assertTrue(populatedCollection!!.updateCollection(2002, "Cheez", "Wen Penelope", 1))
+            assertEquals("Cheez", populatedCollection!!.searchById(2002)!!.cname)
+            assertEquals("Wen Penelope", populatedCollection!!.searchById(2002)!!.createdBy)
+            assertEquals(1, populatedCollection!!.searchById(2002)!!.rank)
+        }
+    }
 }

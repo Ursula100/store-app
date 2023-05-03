@@ -26,6 +26,17 @@ class CollectionAPI {
 
     fun deleteCollection(id: Int): Boolean = collections.removeIf { collection -> collection.collectionId == id }
 
+    fun updateCollection(id: Int, name: String, by: String, rank: Int): Boolean {
+        val toUpdate: Collection? = searchById(id)
+        if (toUpdate != null) {
+            toUpdate.cname = name
+            toUpdate.createdBy = by
+            toUpdate.rank = rank
+            return true
+        }
+        return false
+    }
+
     fun numberOfCollections(): Int = collections.size
 
     fun numberOfCollectionsBy(designer: String): Int =
@@ -36,6 +47,8 @@ class CollectionAPI {
             collections[index]
         else null
     }
+
+    fun searchById(id : Int): Collection? =  collections.find{ note -> note.collectionId == id }
 
     //utility method to determine if an index is valid in list.
     fun isValidListIndex (index: Int, list: List<Any>): Boolean{
