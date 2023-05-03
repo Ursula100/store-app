@@ -104,4 +104,23 @@ class CollectionAPITest {
             assertTrue(populatedCollection!!.listCollectionsCreatedBy("Me").lowercase().contains("summer"))
         }
     }
+
+    @Nested
+    inner class DeleteCollections {
+        @Test
+        fun `deleting a collection that does not exist, returns false`() {
+            assertEquals(false, emptyCollection!!.deleteCollection(2001))
+            assertEquals(false, emptyCollection!!.deleteCollection(1999))
+            assertEquals(false, populatedCollection!!.deleteCollection(1999))
+        }
+
+        @Test
+        fun `deleting a collection that exists delete and returns true`() {
+            assertEquals(5, populatedCollection!!.numberOfCollections())
+            assertEquals(true, populatedCollection!!.deleteCollection(2000))
+            assertEquals(4, populatedCollection!!.numberOfCollections())
+            assertEquals(true, populatedCollection!!.deleteCollection(2001))
+            assertEquals(3, populatedCollection!!.numberOfCollections())
+        }
+    }
 }
