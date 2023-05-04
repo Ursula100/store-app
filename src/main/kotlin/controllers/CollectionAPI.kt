@@ -24,11 +24,11 @@ class CollectionAPI {
                         .joinToString(separator = "\n"){collection -> collection.toString()}
                         .ifBlank {"Currently no collection from $designer"}
 
-    fun deleteCollection(id: Int): Boolean = collections.removeIf { collection -> collection.collectionId == id }
+    fun deleteCollection(id: Int): Boolean = collections.removeIf { collection -> (collection.collectionId == id) && (collection.items.size==0) }
 
     fun updateCollection(id: Int, name: String, by: String, rank: Int): Boolean {
-        val toUpdate: Collection? = searchById(id)
-        if (toUpdate != null) {
+        val toUpdate = searchById(id)
+        if (toUpdate != null && toUpdate.items.size==0) {
             toUpdate.cname = name
             toUpdate.createdBy = by
             toUpdate.rank = rank
