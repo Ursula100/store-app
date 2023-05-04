@@ -23,6 +23,7 @@ fun runMenu() {
             3 -> listCollectionsByBrand()
             4 -> updateCollection()
             5 -> deleteCollection()
+            6 -> findCollectionById()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -33,12 +34,16 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------  
          > |                  STORE APP                        |
          > -----------------------------------------------------  
-         > | STORE APP MENU                                    |
+         > | COLLECTION MENU                                   |
          > |   1) Add a Collection                             |
          > |   2) List All Collections                         |
-         >     3) List Collection by designer/brand                                               |
+         > |   3) List Collection by designer/brand            |
          > |   4) Update a Collection                          |
          > |   5) Delete a Collection                          |
+         > |   6) Search collection by ID                      |
+         > -----------------------------------------------------
+         > | ITEM MENU                                         |
+         > |   7) Add an item to a collection                  |
          > -----------------------------------------------------   
          > ==>> Choose an option:  """.trimMargin(">")
 )
@@ -64,6 +69,7 @@ fun listCollectionsByBrand(){
     println(collectionAPI.listCollectionsCreatedBy(brand))
 }
 
+fun findCollectionById() = collectionAPI.searchById(readNextInt("Enter id of collection to find: "))
 fun updateCollection(){
     listCollections()
     if (collectionAPI.numberOfCollections() > 0) {
