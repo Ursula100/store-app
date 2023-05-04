@@ -19,8 +19,20 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         return items.find{ item -> item.itemId == id }
     }
 
+    fun updateItem(id: Int, iName: String, iDesc: String, material: String, category: String, price : Double): Boolean {
+        val foundItem = searchItemById(id)
+        if (foundItem != null){
+            foundItem.iName = iName
+            foundItem.iDesc = iDesc
+            foundItem.material = material
+            foundItem.category = category
+            foundItem.price = price
+            return true
+        }
+        return false
+    }
 
-
+    fun deleteItem(id: Int): Boolean =  items.removeIf { item -> item.itemId == id}
 
     fun findItem(index: Int): Item? {
         return if (isValidListIndex(index, items))
