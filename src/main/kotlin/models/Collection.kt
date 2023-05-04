@@ -1,5 +1,7 @@
 package models
 
+import utils.Utilities
+
 class Collection(var collectionId: Int = 2000, var cname: String, var createdBy: String, var rank: Int, var items: MutableSet<Item> = mutableSetOf()) {
    fun numberOfItems(): Int =  items.size
 
@@ -10,6 +12,10 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         item.itemId = getItemId()
         return items.add(item)
     }
+
+    fun listItems() =
+        if (items.isEmpty())  "No items in collection"
+        else Utilities.formatSetString(items)
 
     fun findItem(index: Int): Item? {
         return if (isValidListIndex(index, items))

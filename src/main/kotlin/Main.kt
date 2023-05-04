@@ -7,6 +7,7 @@ import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.time.LocalDate.now
 import java.util.Date
+import kotlin.system.exitProcess
 
 private val collectionAPI = CollectionAPI()
 
@@ -111,5 +112,8 @@ private fun addItemToCollection() {
     }
 }
 
-fun exitApp() = println("Exiting!!!")
+fun exitApp() {
+    println("Exiting...")
+    exitProcess(0)
+}
 

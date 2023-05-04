@@ -51,8 +51,6 @@ class CollectionAPI {
     fun searchById(id : Int): Collection? =  collections.find{ note -> note.collectionId == id }
 
     //utility method to determine if an index is valid in list.
-    fun isValidListIndex (index: Int, list: List<Any>): Boolean{
-        return (index >= 0 && index < list.size)
-    }
+    fun isValidListIndex (index: Int, list: List<Any>): Boolean = (index >= 0 && index < list.size)
 
 }
