@@ -2,10 +2,12 @@ package controllers
 
 import models.Collection
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class CollectionAPITest {
     private var summer: Collection? = null
@@ -24,7 +26,7 @@ class CollectionAPITest {
         justMe = Collection(cname = "JustMe", createdBy = "Penelope Wen", rank = 1)
         feezyRitz = Collection(cname = "FeezyRitz", createdBy = "Ritz Dumblemort", rank = 1)
 
-        //adding collections to populatedCollection
+        // adding collections to populatedCollection
         populatedCollection!!.add(summer!!)
         populatedCollection!!.add(daizy!!)
         populatedCollection!!.add(justMe!!)
@@ -86,19 +88,19 @@ class CollectionAPITest {
     @Nested
     inner class ListCollectionsByCreatedBy {
         @Test
-        fun `listCollectionsByCreatedBy returns No Collections in Store when ArrayList has no collections stored` (){
+        fun `listCollectionsByCreatedBy returns No Collections in Store when ArrayList has no collections stored`() {
             assertEquals(0, emptyCollection!!.numberOfCollectionsBy("Nike"))
             assertTrue(emptyCollection!!.listCollectionsCreatedBy("Nike").lowercase() == "no collections in store")
         }
 
         @Test
-        fun `listCollectionsByCreatedBy returns Currently No Collections from $designer when populated ArrayList has no collections by the specified designer stored`(){
+        fun `listCollectionsByCreatedBy returns Currently No Collections from $designer when populated ArrayList has no collections by the specified designer stored`() {
             assertEquals(0, populatedCollection!!.numberOfCollectionsBy("Nike"))
             assertTrue(populatedCollection!!.listCollectionsCreatedBy("Nike").lowercase() == "currently no collection from nike")
         }
 
         @Test
-        fun `listCollectionsByCreatedBy returns collections from specified designer when populated ArrayList contains collections of the specified designer ignoringCase`(){
+        fun `listCollectionsByCreatedBy returns collections from specified designer when populated ArrayList contains collections of the specified designer ignoringCase`() {
             assertEquals(2, populatedCollection!!.numberOfCollectionsBy("me"))
             assertTrue(populatedCollection!!.listCollectionsCreatedBy("Me").lowercase().contains("autumn"))
             assertTrue(populatedCollection!!.listCollectionsCreatedBy("Me").lowercase().contains("summer"))
@@ -127,21 +129,21 @@ class CollectionAPITest {
     @Nested
     inner class UpdateCollection {
         @Test
-        fun `updating a collection that does not exist returns false`(){
-            assertFalse(populatedCollection!!.updateCollection(1999,"Yummy", "Me", 2 ))
-            assertFalse(emptyCollection!!.updateCollection(2000,"Yess", "Tony Montana", 1))
-            assertFalse(emptyCollection!!.updateCollection(1999,"Yess", "Tony Montana", 1))
+        fun `updating a collection that does not exist returns false`() {
+            assertFalse(populatedCollection!!.updateCollection(1999, "Yummy", "Me", 2))
+            assertFalse(emptyCollection!!.updateCollection(2000, "Yess", "Tony Montana", 1))
+            assertFalse(emptyCollection!!.updateCollection(1999, "Yess", "Tony Montana", 1))
         }
 
         @Test
         fun `updating a collection that exists returns true and updates`() {
-            //check collection with id 2002 exists and check the contents
+            // check collection with id 2002 exists and check the contents
             assertEquals(justMe, populatedCollection!!.searchById(2002))
             assertEquals("JustMe", populatedCollection!!.searchById(2002)!!.cname)
             assertEquals("Penelope Wen", populatedCollection!!.searchById(2002)!!.createdBy)
             assertEquals(1, populatedCollection!!.searchById(2002)!!.rank)
 
-            //update collection having id 2002 with new information and ensure contents updated successfully
+            // update collection having id 2002 with new information and ensure contents updated successfully
             assertTrue(populatedCollection!!.updateCollection(2002, "Cheez", "Wen Penelope", 1))
             assertEquals("Cheez", populatedCollection!!.searchById(2002)!!.cname)
             assertEquals("Wen Penelope", populatedCollection!!.searchById(2002)!!.createdBy)

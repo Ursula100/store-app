@@ -1,27 +1,27 @@
 package models
 
-import utils.Utilities
+import utils.Utilities.formatSetString
 
 class Collection(var collectionId: Int = 2000, var cname: String, var createdBy: String, var rank: Int, var items: MutableSet<Item> = mutableSetOf()) {
-   fun numberOfItems(): Int =  items.size
+    fun numberOfItems(): Int = items.size
 
     private var lastItemId = 1
     private fun getItemId() = lastItemId++
 
-    fun addItem(item: Item) : Boolean {
+    fun addItem(item: Item): Boolean {
         item.itemId = getItemId()
         return items.add(item)
     }
 
-    fun listItems() = if (items.isEmpty())  "No items in collection" else Utilities.formatSetString(items)
+    fun listItems() = if (items.isEmpty()) "No items in collection" else formatSetString(items)
 
     fun searchItemById(id: Int): Item? {
-        return items.find{ item -> item.itemId == id }
+        return items.find { item -> item.itemId == id }
     }
 
-    fun updateItem(id: Int, iName: String, iDesc: String, material: String, category: String, price : Double): Boolean {
+    fun updateItem(id: Int, iName: String, iDesc: String, material: String, category: String, price: Double): Boolean {
         val foundItem = searchItemById(id)
-        if (foundItem != null){
+        if (foundItem != null) {
             foundItem.iName = iName
             foundItem.iDesc = iDesc
             foundItem.material = material
@@ -32,7 +32,7 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         return false
     }
 
-    fun deleteItem(id: Int): Boolean =  items.removeIf { item -> item.itemId == id}
+    fun deleteItem(id: Int): Boolean = items.removeIf { item -> item.itemId == id }
 
     fun findItem(index: Int): Item? {
         return if (isValidListIndex(index, items))
@@ -40,7 +40,7 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         else null
     }
 
-    fun isValidListIndex (index: Int, list: MutableSet<Item>): Boolean {
+    fun isValidListIndex(index: Int, list: MutableSet<Item>): Boolean {
         return (index >= 0 && index < list.size)
     }
 
