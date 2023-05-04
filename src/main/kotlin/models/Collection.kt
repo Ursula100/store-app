@@ -1,7 +1,7 @@
 package models
 
-class Collection(var collectionId: Int = 2000, var cname: String, var createdBy: String, var rank: Int, var isEmpty: Boolean = true, var items: MutableSet<Item> = mutableSetOf()) {
-   private fun numberOfItems(): Int =  items.size
+class Collection(var collectionId: Int = 2000, var cname: String, var createdBy: String, var rank: Int, var items: MutableSet<Item> = mutableSetOf()) {
+   fun numberOfItems(): Int =  items.size
 
     private var lastItemId = 1
     private fun getItemId() = lastItemId++
@@ -10,6 +10,17 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         item.itemId = getItemId()
         return items.add(item)
     }
+
+    fun findItem(index: Int): Item? {
+        return if (isValidListIndex(index, items))
+            items.elementAt(index)
+        else null
+    }
+
+    fun isValidListIndex (index: Int, list: MutableSet<Item>): Boolean {
+        return (index >= 0 && index < list.size)
+    }
+
     override fun toString(): String {
         return "Id - $collectionId: ${cname.uppercase()} by ${createdBy.uppercase()}. Contains ${numberOfItems()} items"
     }
