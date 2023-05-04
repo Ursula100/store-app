@@ -5,6 +5,8 @@ plugins {
     // Plugin for Dokka - KDoc generating tool
     id("org.jetbrains.dokka") version "1.6.10"
     jacoco
+    // KLint pluglin
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     application
 }
 
@@ -23,7 +25,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-    //report is always generated after tests run
+    // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
 }
 
@@ -34,3 +36,8 @@ tasks.withType<KotlinCompile> {
 application {
     mainClass.set("MainKt")
 }
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "MainKt"
+}
+

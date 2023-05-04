@@ -10,10 +10,10 @@ private val collectionAPI = CollectionAPI()
 
 fun main() = runMenu()
 
-//fun test() = print(now())
+// fun test() = print(now())
 
 fun runMenu() {
-    //test()
+    // test()
     do {
         when (val option = mainMenu()) {
             1 -> addCollection()
@@ -53,7 +53,7 @@ fun mainMenu() = readNextInt(
          > ==>> Choose an option:  """.trimMargin(">")
 )
 
-fun addCollection(){
+fun addCollection() {
     val collectionName = readNextLine("Enter a name for the collection: ")
     val createdBy = readNextLine("Enter the creator of the collection: ")
     val isAdded = collectionAPI.add(Collection(cname = collectionName, createdBy = createdBy, rank = 1))
@@ -62,32 +62,31 @@ fun addCollection(){
 }
 
 fun listCollections() {
-    if(collectionAPI.numberOfCollections()>0)
+    if (collectionAPI.numberOfCollections()> 0)
         print("There are/is : ${collectionAPI.numberOfCollections()} collection(s) in store \n")
     println(collectionAPI.listAllCollections())
 }
 
-fun listCollectionsByBrand(){
+fun listCollectionsByBrand() {
     val brand = readNextLine("Enter category: ")
-    if(collectionAPI.numberOfCollectionsBy(brand)>0)
+    if (collectionAPI.numberOfCollectionsBy(brand)> 0)
         print("There are/is ${collectionAPI.numberOfCollectionsBy(brand)} collection(s) from $brand \n")
     println(collectionAPI.listCollectionsCreatedBy(brand))
 }
 
 fun findCollectionById() = chooseCollection()
-fun updateCollection(){
+fun updateCollection() {
     listCollections()
     if (collectionAPI.numberOfCollections() > 0) {
         val collectionId = readNextInt("Enter the ID of the collection to update: ")
-        if (collectionAPI.searchById(collectionId)!=null) {
+        if (collectionAPI.searchById(collectionId) != null) {
             val name = readNextLine("Enter name of the collection: ")
             val from = readNextLine("Enter collection brand/designer: ")
-            val rank  = readNextInt("Enter the rank of the collection: ")
+            val rank = readNextInt("Enter the rank of the collection: ")
             if (collectionAPI.updateCollection(collectionId, name, from, rank))
                 println("Update Successful")
             else println("Update Failed")
-        }
-        else println("There is no Collection with id: $collectionId \n")
+        } else println("There is no Collection with id: $collectionId \n")
     }
 }
 
@@ -110,7 +109,7 @@ private fun addItemToCollection() {
         val mat = readNextLine("Enter the material of the item: ")
         val cat = readNextLine("Enter the name of the item: ")
         val price = readNextDouble("Enter the price of the item (for example 15.00): ")
-        val newItem: Item = Item(iName = name, iDesc = desc, material = mat, category = cat, price = price )
+        val newItem = Item(iName = name, iDesc = desc, material = mat, category = cat, price = price)
         if (collection.addItem(newItem))
             println("Successfully added item with ID ${newItem.itemId}!")
         else println("Add UnSuccessful")
@@ -119,8 +118,7 @@ private fun addItemToCollection() {
 
 private fun listItemsInCollection() = chooseCollection()?.listItems()
 
-
-private fun updateItemInCollection(){
+private fun updateItemInCollection() {
     listCollections()
     val collection: Collection? = chooseCollection()
     if (collection != null) {
@@ -141,13 +139,12 @@ private fun updateItemInCollection(){
                 println("No Item matches provided ID")
             }
         }
-    }
-    else println("No collection with provided ID")
+    } else println("No collection with provided ID")
 }
 
 private fun deleteItemInCollection() {
     listCollections()
-    val collection: Collection? = chooseCollection()
+    val collection = chooseCollection()
     if (collection != null) {
         collection.listItems()
         if (collection.numberOfItems() > 0) {
@@ -155,10 +152,9 @@ private fun deleteItemInCollection() {
             if (item != null) {
                 if (collection.deleteItem(item.itemId)) println("Delete Successful!")
                 else println("Delete NOT Successful")
-                }
             }
         }
-    else println("No collection with provided ID")
+    } else println("No collection with provided ID")
 }
 
 private fun chooseCollection(): Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection: "))
@@ -167,4 +163,3 @@ fun exitApp() {
     println("Exiting...")
     exitProcess(0)
 }
-

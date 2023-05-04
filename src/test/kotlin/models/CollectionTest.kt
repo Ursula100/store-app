@@ -1,6 +1,10 @@
 package models
 
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
 class CollectionTest {
     private var emptyC: Collection? = null
@@ -17,7 +21,6 @@ class CollectionTest {
 
         populatedC!!.addItem(item1!!)
         populatedC!!.addItem(item2!!)
-
     }
 
     @AfterEach
@@ -79,7 +82,7 @@ class CollectionTest {
 
         @Test
         fun `listItems returns items when ArrayList is not empty`() {
-            Assertions.assertEquals(5, populatedC!!.numberOfItems())
+            Assertions.assertEquals(2, populatedC!!.numberOfItems())
             val items = populatedC!!.listItems().lowercase()
             Assertions.assertTrue(items.contains("shoes"))
             Assertions.assertTrue(items.contains("trouser"))

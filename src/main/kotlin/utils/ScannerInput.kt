@@ -64,16 +64,4 @@ object ScannerInput {
         print(prompt)
         return Scanner(System.`in`).nextLine()
     }
-
-    /**
-     * Read a single character of text from the user.  There is no validation done on the entered data.
-     *
-     * @param prompt  The information printed to the console for the user to read
-     * @return The char read from the user.
-     */
-    @JvmStatic
-    fun readNextChar(prompt: String?): Char {
-        print(prompt)
-        return Scanner(System.`in`).next()[0]
-    }
 }
