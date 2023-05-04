@@ -1,12 +1,9 @@
 import controllers.CollectionAPI
 import models.Collection
 import models.Item
-import utils.ScannerInput
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
-import java.time.LocalDate.now
-import java.util.Date
 import kotlin.system.exitProcess
 
 private val collectionAPI = CollectionAPI()
@@ -27,6 +24,8 @@ fun runMenu() {
             6 -> findCollectionById()
             7 -> addItemToCollection()
             8 -> listItemsInCollection()
+            9 -> updateItemInCollection()
+            10 -> deleteItemInCollection()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -47,7 +46,9 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------
          > | ITEM MENU                                         |
          > |   7) Add an item to a collection                  |
-         > |   8) List items in a collection                  |
+         > |   8) List items in a collection                   |
+         > |   9) Update an item in a collection               |
+         > |   10) List items in a collection                   |
          > -----------------------------------------------------   
          > ==>> Choose an option:  """.trimMargin(">")
 )
@@ -116,14 +117,51 @@ private fun addItemToCollection() {
     }
 }
 
-private fun listItemsInCollection(){
-    val collection = chooseCollection()
-   if(collection == null) println("No collection with that id")
-    else collection.listItems()
+private fun listItemsInCollection() = chooseCollection()?.listItems()
+
+
+private fun updateItemInCollection(){
+    listCollections()
+    val collection: Collection? = chooseCollection()
+    if (collection != null) {
+        collection.listItems()
+        if (collection.numberOfItems() > 0) {
+            val item: Item? = collection.searchItemById(readNextInt(("Enter the id of the item to update")))
+            if (item != null) {
+                val name = readNextLine("Enter new name: ")
+                val desc = readNextLine("Enter new description: ")
+                val category = readNextLine("Enter category: ")
+                val material = readNextLine("Enter material: ")
+                val price = readNextDouble("Enter new price (ex. 84.99): ")
+                if (collection.updateItem(item.itemId, name, desc, category, material, price))
+                    println("Item contents updated")
+                else
+                    println("Item contents NOT updated")
+            } else {
+                println("No Item matches provided ID")
+            }
+        }
+    }
+    else println("No collection with provided ID")
+}
+
+private fun deleteItemInCollection() {
+    listCollections()
+    val collection: Collection? = chooseCollection()
+    if (collection != null) {
+        collection.listItems()
+        if (collection.numberOfItems() > 0) {
+            val item: Item? = collection.searchItemById(readNextInt(("Enter the id of the item to delete: ")))
+            if (item != null) {
+                if (collection.deleteItem(item.itemId)) println("Delete Successful!")
+                else println("Delete NOT Successful")
+                }
+            }
+        }
+    else println("No collection with provided ID")
 }
 
 private fun chooseCollection(): Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection: "))
-//private fun chooseItem(): Int = searchI readNextInt("Enter the ID of the item: ")
 
 fun exitApp() {
     println("Exiting...")
