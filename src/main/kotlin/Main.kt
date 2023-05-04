@@ -73,7 +73,7 @@ fun listCollectionsByBrand(){
     println(collectionAPI.listCollectionsCreatedBy(brand))
 }
 
-fun findCollectionById() = collectionAPI.searchById(readNextInt("Enter id of collection to find: "))
+fun findCollectionById() = chooseCollection()
 fun updateCollection(){
     listCollections()
     if (collectionAPI.numberOfCollections() > 0) {
@@ -101,7 +101,7 @@ fun deleteCollection() {
 }
 
 private fun addItemToCollection() {
-    val collection: Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection the item is to be added: "))
+    val collection = chooseCollection()
     collection?.listItems()
     if (collection != null) {
         val name = readNextLine("Enter the name of the item: ")
@@ -117,10 +117,13 @@ private fun addItemToCollection() {
 }
 
 private fun listItemsInCollection(){
-    val collection: Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection the item is to be added: "))
-    if(collection == null) println("No collection with that id")
+    val collection = chooseCollection()
+   if(collection == null) println("No collection with that id")
     else collection.listItems()
 }
+
+private fun chooseCollection(): Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection: "))
+//private fun chooseItem(): Int = searchI readNextInt("Enter the ID of the item: ")
 
 fun exitApp() {
     println("Exiting...")

@@ -15,6 +15,13 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
 
     fun listItems() = if (items.isEmpty())  "No items in collection" else Utilities.formatSetString(items)
 
+    fun searchItemById(id: Int): Item? {
+        return items.find{ item -> item.itemId == id }
+    }
+
+
+
+
     fun findItem(index: Int): Item? {
         return if (isValidListIndex(index, items))
             items.elementAt(index)
