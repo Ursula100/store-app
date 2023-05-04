@@ -14,5 +14,7 @@ object Utilities {
     fun formatSetString(items: Set<Item>): String =
         items
             .joinToString(separator = "\n") { item -> item.toString() }
+    @JvmStatic
+    fun isValidListIndex (index: Int, list: List<Any>): Boolean = (index >= 0 && index < list.size)
 
 }
