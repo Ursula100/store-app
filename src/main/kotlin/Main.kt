@@ -158,7 +158,7 @@ private fun deleteItemInCollection() {
                 }
             }
         }
-    else println("No collection with provided ID.")
+    else println("No collection with provided ID")
 }
 
 private fun chooseCollection(): Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection: "))
