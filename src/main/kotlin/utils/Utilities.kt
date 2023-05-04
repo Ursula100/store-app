@@ -2,7 +2,6 @@ package utils
 
 import models.Collection
 import models.Item
-import models.Note
 
 object Utilities {
 
@@ -14,13 +13,13 @@ object Utilities {
     //      name; we don't have to create an object of Utilities to use them.
 
     @JvmStatic
-    fun formatListString(collectionsToFormat: List<Collection>): String =
+    fun formatListString(collectionsToFormat: ArrayList<Collection>): String =
         collectionsToFormat
             .joinToString(separator = "\n") { collection ->  "$collection" }
 
     @JvmStatic
     fun formatSetString(itemsToFormat: Set<Item>): String =
         itemsToFormat
-            .joinToString(separator = "\n") { item ->  "\t$item" }
+            .joinToString(separator = "\n") { item -> item.toString() }
 
 }

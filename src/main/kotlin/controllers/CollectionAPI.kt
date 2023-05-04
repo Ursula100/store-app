@@ -1,6 +1,7 @@
 package controllers
 
 import models.Collection
+import utils.Utilities.formatListString
 
 class CollectionAPI {
     private var collections = ArrayList<Collection>()
@@ -20,9 +21,10 @@ class CollectionAPI {
 
     fun listCollectionsCreatedBy(designer : String): String =
         if  (collections.isEmpty()) "No collections in store"
-        else collections.filter{collection: Collection -> collection.createdBy.equals(designer, ignoreCase = true)}
-                        .joinToString(separator = "\n"){collection -> collection.toString()}
-                        .ifBlank {"Currently no collection from $designer"}
+        else formatListString(collections.filter{ collection: Collection -> collection.createdBy.equals(designer, ignoreCase = true)} as ArrayList<Collection>)
+                           .ifBlank {"Currently no collection from $designer" }
+
+
 
     fun deleteCollection(id: Int): Boolean = collections.removeIf { collection -> (collection.collectionId == id) && (collection.items.size==0) }
 

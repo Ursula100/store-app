@@ -13,9 +13,7 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         return items.add(item)
     }
 
-    fun listItems() =
-        if (items.isEmpty())  "No items in collection"
-        else Utilities.formatSetString(items)
+    fun listItems() = if (items.isEmpty())  "No items in collection" else Utilities.formatSetString(items)
 
     fun findItem(index: Int): Item? {
         return if (isValidListIndex(index, items))
@@ -27,7 +25,5 @@ class Collection(var collectionId: Int = 2000, var cname: String, var createdBy:
         return (index >= 0 && index < list.size)
     }
 
-    override fun toString(): String {
-        return "Id - $collectionId: ${cname.uppercase()} by ${createdBy.uppercase()}. Contains ${numberOfItems()} items"
-    }
+    override fun toString(): String = "Id - $collectionId: ${cname.uppercase()} by ${createdBy.uppercase()}. Contains ${numberOfItems()} items \n"
 }

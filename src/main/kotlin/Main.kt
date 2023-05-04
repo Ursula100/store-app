@@ -25,6 +25,8 @@ fun runMenu() {
             4 -> updateCollection()
             5 -> deleteCollection()
             6 -> findCollectionById()
+            7 -> addItemToCollection()
+            8 -> listItemsInCollection()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -45,6 +47,7 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------
          > | ITEM MENU                                         |
          > |   7) Add an item to a collection                  |
+         > |   8) List items in a collection                  |
          > -----------------------------------------------------   
          > ==>> Choose an option:  """.trimMargin(">")
 )
@@ -99,6 +102,7 @@ fun deleteCollection() {
 
 private fun addItemToCollection() {
     val collection: Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection the item is to be added: "))
+    collection?.listItems()
     if (collection != null) {
         val name = readNextLine("Enter the name of the item: ")
         val desc = readNextLine("Enter a description for the item: ")
@@ -110,6 +114,12 @@ private fun addItemToCollection() {
             println("Successfully added item with ID ${newItem.itemId}!")
         else println("Add UnSuccessful")
     }
+}
+
+private fun listItemsInCollection(){
+    val collection: Collection? = collectionAPI.searchById(readNextInt("Enter the ID of the collection the item is to be added: "))
+    if(collection == null) println("No collection with that id")
+    else collection.listItems()
 }
 
 fun exitApp() {
