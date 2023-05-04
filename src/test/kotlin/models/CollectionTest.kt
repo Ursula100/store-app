@@ -1,9 +1,8 @@
 package models
 
-import controllers.CollectionAPI
 import org.junit.jupiter.api.*
 
-class CollectionAPI {
+class CollectionTest {
     private var emptyC: Collection? = null
     private var populatedC: Collection? = null
     private var item1: Item? = null
@@ -47,6 +46,43 @@ class CollectionAPI {
             Assertions.assertTrue(populatedC!!.addItem(newItem))
             Assertions.assertEquals(3, populatedC!!.numberOfItems())
             Assertions.assertEquals(newItem, populatedC!!.findItem(populatedC!!.numberOfItems() - 1))
+        }
+    }
+
+    @Nested
+    inner class DeleteItem {
+        @Test
+        fun `deleting a item that does not exist from collection, returns false`() {
+            Assertions.assertEquals(false, emptyC!!.deleteItem(2000))
+            Assertions.assertEquals(false, emptyC!!.deleteItem(1999))
+            Assertions.assertEquals(false, populatedC!!.deleteItem(1999))
+            Assertions.assertEquals(false, populatedC!!.deleteItem(3000))
+        }
+
+        @Test
+        fun `deleting a collection that exists delete and returns true`() {
+            Assertions.assertEquals(2, populatedC!!.numberOfItems())
+            Assertions.assertEquals(true, populatedC!!.deleteItem(1))
+            Assertions.assertEquals(1, populatedC!!.numberOfItems())
+            Assertions.assertEquals(true, populatedC!!.deleteItem(2))
+            Assertions.assertEquals(0, populatedC!!.numberOfItems())
+        }
+    }
+
+    @Nested
+    inner class ListItems {
+        @Test
+        fun `listItems returns No items in Collection message when ArrayList is empty`() {
+            Assertions.assertEquals(0, emptyC!!.numberOfItems())
+            Assertions.assertTrue(emptyC!!.listItems().lowercase().contains("no items in collection"))
+        }
+
+        @Test
+        fun `listItems returns items when ArrayList is not empty`() {
+            Assertions.assertEquals(5, populatedC!!.numberOfItems())
+            val items = populatedC!!.listItems().lowercase()
+            Assertions.assertTrue(items.contains("shoes"))
+            Assertions.assertTrue(items.contains("trouser"))
         }
     }
 }

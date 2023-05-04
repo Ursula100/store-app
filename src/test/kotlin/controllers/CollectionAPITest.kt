@@ -65,7 +65,7 @@ class CollectionAPITest {
     }
 
     @Nested
-    inner class ListNotes {
+    inner class ListCollections {
         @Test
         fun `listAllCollections returns No Collections in Store message when ArrayList is empty`() {
             assertEquals(0, emptyCollection!!.numberOfCollections())
@@ -75,12 +75,12 @@ class CollectionAPITest {
         @Test
         fun `listAllCollections returns Collections when ArrayList is not empty`() {
             assertEquals(5, populatedCollection!!.numberOfCollections())
-            val notesString = populatedCollection!!.listAllCollections().lowercase()
-            assertTrue(notesString.contains("justme"))
-            assertTrue(notesString.contains("summer"))
-            assertTrue(notesString.contains("daizy"))
-            assertTrue(notesString.contains("feezyritz"))
-            assertTrue(notesString.contains("autumn"))
+            val collections = populatedCollection!!.listAllCollections().lowercase()
+            assertTrue(collections.contains("justme"))
+            assertTrue(collections.contains("summer"))
+            assertTrue(collections.contains("daizy"))
+            assertTrue(collections.contains("feezyritz"))
+            assertTrue(collections.contains("autumn"))
         }
     }
     @Nested
